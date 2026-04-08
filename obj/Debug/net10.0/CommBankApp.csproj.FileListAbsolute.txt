@@ -1,0 +1,14 @@
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\bin\Debug\net10.0\CommBankApp.exe
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\bin\Debug\net10.0\CommBankApp.deps.json
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\bin\Debug\net10.0\CommBankApp.runtimeconfig.json
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\bin\Debug\net10.0\CommBankApp.dll
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\bin\Debug\net10.0\CommBankApp.pdb
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.AssemblyInfoInputs.cache
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.AssemblyInfo.cs
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.csproj.CoreCompileInputs.cache
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.dll
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\refint\CommBankApp.dll
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.pdb
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.genruntimeconfig.cache
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\ref\CommBankApp.dll
