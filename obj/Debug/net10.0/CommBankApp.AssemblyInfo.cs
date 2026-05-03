@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CommBankApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d65a72fc53084874e72bed61298000cdaf0c2df0")]
 [assembly: System.Reflection.AssemblyProductAttribute("CommBankApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CommBankApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

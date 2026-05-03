@@ -12,3 +12,4 @@ C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\refi
 C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.pdb
 C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.genruntimeconfig.cache
 C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\ref\CommBankApp.dll
+C:\Users\shish\OneDrive\Documents\CommBankApp\CommBankApp\obj\Debug\net10.0\CommBankApp.sourcelink.json

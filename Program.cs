@@ -3,15 +3,15 @@
 namespace CommBankApp
 {
     // Entry point for the CommBank console application
-    // Controls the main menu loop and directs user choices to the Bank class
+    // Controls the main menu loop and routes all user choices to the Bank class
     class Program
     {
         static void Main(string[] args)
         {
-            // Create the Bank object with CommBank as the selected bank
+            // Instantiate the Bank object with CommBank as the selected institution
             Bank bank = new Bank("Commonwealth Bank of Australia");
 
-            // Keep the application running until the user chooses to quit
+            // Keep the application running until the user selects Quit
             while (true)
             {
                 PrintBanner(bank.BankName);
@@ -27,7 +27,7 @@ namespace CommBankApp
                 switch (option)
                 {
                     case "1":
-                        // Attempt login and proceed to banking menu if successful
+                        // Attempt login - proceed to banking menu if credentials are valid
                         User loggedIn = bank.Login();
                         if (loggedIn != null)
                             ShowBankingMenu(loggedIn, bank);
@@ -52,61 +52,111 @@ namespace CommBankApp
             }
         }
 
-        // Displays the banking options screen after a successful login
-        // Transaction features such as deposit and withdraw will be added in Assessment 3
+        // Displays the full banking dashboard after a successful login
+        // All operations loop until the user chooses to logout
         static void ShowBankingMenu(User user, Bank bank)
         {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\n    \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557");
-            Console.WriteLine($"    \u2551  Commonwealth Bank of Australia          \u2551");
-            Console.WriteLine("    \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d");
-            Console.ResetColor();
+            bool loggedIn = true;
 
-            bank.PrintColour($"\n    Welcome, {user.Username}!", ConsoleColor.Green);
-            Console.WriteLine();
+            while (loggedIn)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\n    \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557");
+                Console.WriteLine($"    \u2551  Commonwealth Bank of Australia \u2551");
+                Console.WriteLine("    \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d");
+                Console.ResetColor();
 
-            PrintOption("[1] View Balance");
-            PrintOption("[2] Deposit");
-            PrintOption("[3] Withdraw");
-            PrintOption("[4] Transfer");
-            PrintOption("[5] Logout");
+                bank.PrintColour($"\n  Welcome,{user.Username}!", ConsoleColor.Green);
+                bank.PrintColour($"    {user.Account.AccountType}  |  Acc: {user.Account.AccountNumber}", ConsoleColor.DarkGray);
+                Console.WriteLine();
 
-            Console.Write("\n    Select Option: ");
-            string choice = Console.ReadLine()?.Trim();
+                PrintOption("[1] View Balance");
+                PrintOption("[2] Deposit");
+                PrintOption("[3] Withdraw");
+                PrintOption("[4] Transfer");
+                PrintOption("[5] Transaction History");
 
-            // Option 5 logs the user out and returns to the main menu
-            if (choice == "5") return;
+                // Apply Interest option only shown to Savings Account holders
+                if (user.Account is SavingsAccount)
+                    PrintOption("[6] Apply Monthly Interest");
 
-            Console.WriteLine();
-            bank.PrintColour("    This feature will be available in the next update.", ConsoleColor.DarkGray);
+                PrintOption("[7] Logout");
+
+                Console.Write("\n    Select Option: ");
+                string choice = Console.ReadLine()?.Trim();
+                Console.WriteLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        bank.ViewBalance(user);
+                        break;
+
+                    case "2":
+                        bank.Deposit(user);
+                        break;
+
+                    case "3":
+                        bank.Withdraw(user);
+                        break;
+
+                    case "4":
+                        bank.Transfer(user);
+                        break;
+
+                    case "5":
+                        user.Account.PrintTransactionHistory();
+                        break;
+
+                    case "6":
+                        // Only process if user actually has a Savings Account
+                        if (user.Account is SavingsAccount)
+                            bank.ApplyInterest(user);
+                        else
+                            bank.PrintColour("    \u2717 Invalid option.", ConsoleColor.Red);
+                        break;
+
+                    case "7":
+                        bank.PrintColour("    You have been logged out successfully.", ConsoleColor.Yellow);
+                        loggedIn = false;
+                        break;
+
+                    default:
+                        bank.PrintColour("    \u2717 Invalid option. Please try again.", ConsoleColor.Red);
+                        break;
+                }
+
+                if (loggedIn) Pause();
+            }
+
             Pause();
         }
 
-        // Draws a bordered box around a single menu option for a cleaner UI
+        // Draws a bordered box around a single menu option for a polished UI
         static void PrintOption(string text)
         {
-            int width     = 24;
+            int    width  = 30;
             string padded = text.PadRight(width);
-            Console.WriteLine($"    \u250c{new string('\u2500', width+2 )}\u2510");
+            Console.WriteLine($"    \u250c{new string('\u2500', width + 2)}\u2510");
             Console.WriteLine($"    \u2502 {padded} \u2502");
-            Console.WriteLine($"    \u2514{new string('\u2500', width+2 )}\u2518");
+            Console.WriteLine($"    \u2514{new string('\u2500', width + 2)}\u2518");
             Console.WriteLine();
         }
 
-        // Prints the CommBank welcome banner at the top of the main menu
+        // Renders the CommBank welcome banner at the top of the main menu
         static void PrintBanner(string bankName)
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\n    \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557");
-            Console.WriteLine($"    \u2551  Welcome to {bankName}\u2551");
-            Console.WriteLine("    \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d");
+            Console.WriteLine("\n    \u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557");
+            Console.WriteLine($"    \u2551  Welcome to {bankName,-30}\u2551");
+            Console.WriteLine("    \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d");
             Console.ResetColor();
             Console.WriteLine();
         }
 
-        // Pauses the screen until the user presses any key
+        // Pauses the screen until the user presses any key to continue
         static void Pause()
         {
             Console.WriteLine("\n    Press any key to continue...");
